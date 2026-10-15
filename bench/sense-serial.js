@@ -1,8 +1,8 @@
 // bench/sense-serial.js: sense.js for bench pairs. Reads an Arduino over USB
-// instead of the camera, turns readings into signals, applies table.js, and
+// instead of the camera, turns readings into signals, applies the table, and
 // writes the same window.sense. table.js, piece.js and fake-sense.js do not
-// change. To use it, change the last script in index.html from sense.js to
-// bench/sense-serial.js.
+// change. Bench pairs open bench.html, which loads this file and
+// bench/table-bench.js.
 //
 // The Arduino prints lines of name and number pairs, e.g. "cm 42.5 light 612"
 // (bench/bench.ino). Web Serial needs Chrome or Edge, and a page on localhost or
