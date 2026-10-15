@@ -55,7 +55,7 @@ Flash `bench/bench.ino` for the sensor alone. Open `bench.html` on localhost in 
 
 | Sensor | A signal it can give | Watch for |
 |---|---|---|
-| HC-SR04 ultrasonic | `near`, `present` | The worked example in `bench.ino`. Soft clothing swallows the echo. |
+| HC-SR04 ultrasonic | `near`, `present` | The worked example in `bench.ino`. It reports the nearest thing in a cone about 30° wide, so flat on a desk it hears the desk: aim it up or off the edge. Soft clothing swallows the echo. |
 | PIR motion | `moving` | On or off, and it holds itself on for a few seconds. Someone standing still disappears. |
 | Photoresistor | `shade` | Needs a 10k resistor beside it. The room's light changes through the day. |
 | TCRT5000 reflective IR | `close` | A hand within a few centimetres, nothing further. |
