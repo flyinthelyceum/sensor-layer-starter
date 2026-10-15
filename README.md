@@ -49,6 +49,15 @@ window.sense = {
 
 If the readout says the face library did not load, the school network is blocking `cdn.jsdelivr.net`. Press **D** and keep going on the fake sensor: the piece reads the same object either way. A new state you add to `table.js` gets a bright colour of its own in `piece.js` until you give it one.
 
+## Bench pairs: an Arduino instead of the camera
+
+The bench track swaps the sense layer and nothing else. `table.js`, `piece.js` and `fake-sense.js` stay exactly as they are.
+
+1. Build the circuit and flash `bench/bench.ino` from the Arduino IDE. It prints one line per reading, like `cm 42.5`. Check it in the IDE's Serial Monitor at 115200, then **close the Serial Monitor**: only one program can hold the port.
+2. In `index.html`, change the last script from `sense.js` to `bench/sense-serial.js`.
+3. Run it on localhost in **Chrome**, click **Connect the Arduino**, and pick the board. Press **D** to see the raw line and your signals.
+4. Your signal is a function in `SIGNALS` in `bench/sense-serial.js`: it gets the latest reading (`{ cm: 42.5 }`) and returns 0 to 1. Add the sensor to the sketch's printed line, then its function, then its name in `table.js`.
+
 ## What stays in the browser
 
 Nothing saves a frame or a landmark list. The model downloads once when you click Start; after that the Network panel stays quiet. Keep it that way: no `localStorage` of readings, no uploads, no screenshots of the camera image in the repo. Screenshots for your break log show the piece or the D readout.
