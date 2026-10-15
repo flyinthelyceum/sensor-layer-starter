@@ -16,11 +16,20 @@ resize();
 
 const COLORS = { nobody: '#0b0b0d', here: '#1d2a3a', open: '#3a1d2a' };
 
+// A state with no colour above still gets a bright one of its own, picked from
+// its name, so a new row in table.js is visible the moment it fires.
+function colorFor(state) {
+  if (COLORS[state]) return COLORS[state];
+  let hash = 0;
+  for (const ch of state) hash = (hash * 31 + ch.charCodeAt(0)) % 360;
+  return `hsl(${hash}, 85%, 50%)`;
+}
+
 function frame() {
   const { state, signals, since } = window.sense;
   const held = performance.now() - since; // ms in this state
 
-  ctx.fillStyle = COLORS[state] || '#222';
+  ctx.fillStyle = colorFor(state);
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   if (state !== 'nobody') {

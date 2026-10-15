@@ -9,9 +9,9 @@
 // a frame or a landmark list. The model downloads once when the page loads;
 // after that the Network panel should stay quiet.
 
-import { FaceLandmarker, FilesetResolver } from
-  'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.1.1/vision_bundle.mjs';
-
+// The library loads when you click Start, not before, so a blocked network shows
+// up as a message on screen instead of a button that does nothing.
+const LIBRARY = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.1.1/vision_bundle.mjs';
 const WASM = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.1.1/wasm';
 const MODEL = 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task';
 
@@ -43,6 +43,19 @@ const SIGNALS = {
   //   smile: result => (score(result, 'mouthSmileLeft') + score(result, 'mouthSmileRight')) / 2,
   //
   // Geometry from the 478 points (x and y run 0 to 1 across the frame):
+  // A number that needs the last frame too, kept in a closure (how little the
+  // nose moved since the previous frame):
+  //   still: (() => {
+  //     let last = null;
+  //     return result => {
+  //       const nose = result.faceLandmarks[0] && result.faceLandmarks[0][1];
+  //       if (!nose) { last = null; return 0; }
+  //       const moved = last ? Math.hypot(nose.x - last.x, nose.y - last.y) : 0;
+  //       last = nose;
+  //       return clamp(1 - moved * 40); // a jump of 1/40 of the frame reads 0
+  //     };
+  //   })(),
+  //
   //   near: result => {
   //     const face = result.faceLandmarks[0];
   //     if (!face) return 0;
@@ -112,6 +125,15 @@ function tick() {
 async function start() {
   button.disabled = true;
   button.textContent = 'Loading the model…';
+  let FaceLandmarker, FilesetResolver;
+  try {
+    ({ FaceLandmarker, FilesetResolver } = await import(LIBRARY));
+  } catch (err) {
+    console.error(err);
+    showFailure('The face library did not load (cdn.jsdelivr.net is blocked or offline). ' +
+      'Press D: the fake sensor still works, so keep building the piece.');
+    return;
+  }
   try {
     const vision = await FilesetResolver.forVisionTasks(WASM);
     const options = {
@@ -138,12 +160,16 @@ async function start() {
     requestAnimationFrame(tick);
   } catch (err) {
     console.error(err);
-    button.disabled = false;
-    button.textContent = 'Camera did not start. Try again';
-    failed = true;
-    readout.hidden = false;
-    readout.textContent = `Camera did not start: ${err.message}`;
+    showFailure(`Camera did not start: ${err.message}`);
   }
+}
+
+function showFailure(message) {
+  button.disabled = false;
+  button.textContent = 'Did not start. Try again';
+  failed = true;
+  readout.hidden = false;
+  readout.textContent = message;
 }
 
 button.addEventListener('click', start);
@@ -154,7 +180,10 @@ button.addEventListener('click', start);
 
 addEventListener('keydown', e => {
   const key = e.key.toLowerCase();
-  if (key === 'd') readout.hidden = !readout.hidden;
+  if (key === 'd') {
+    if (failed) { failed = false; readout.hidden = false; return; } // swap the message for the fake readout
+    readout.hidden = !readout.hidden;
+  }
   if (key === 'b') scores.hidden = !scores.hidden;
   if (key === 'v') video.classList.toggle('shown');
 });

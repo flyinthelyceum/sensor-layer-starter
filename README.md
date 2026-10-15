@@ -45,6 +45,10 @@ window.sense = {
 - **V**: the camera, small, in the corner
 - **1, 2, 3 …** and the **mouse**: drive the fake sensor before the camera starts
 
+## When Start does nothing useful
+
+If the readout says the face library did not load, the school network is blocking `cdn.jsdelivr.net`. Press **D** and keep going on the fake sensor: the piece reads the same object either way. A new state you add to `table.js` gets a bright colour of its own in `piece.js` until you give it one.
+
 ## What stays in the browser
 
 Nothing saves a frame or a landmark list. The model downloads once when you click Start; after that the Network panel stays quiet. Keep it that way: no `localStorage` of readings, no uploads, no screenshots of the camera image in the repo. Screenshots for your break log show the piece or the D readout.
