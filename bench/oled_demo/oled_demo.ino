@@ -87,7 +87,8 @@ void drawHeader(float cm) {
 void drawNumber(float cm) {
   char buf[8];
   oled.setFont(u8g2_font_logisoso22_tn);
-  if (cm >= 400.0) {
+  // The smoothed value creeps toward 400 (no echo) but never reaches it.
+  if (cm >= 399.0) {
     strcpy(buf, "---");
   } else {
     dtostrf(cm, 0, cm < 100 ? 1 : 0, buf);
