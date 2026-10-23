@@ -1,5 +1,7 @@
 # Sensor Layer starter
 
+**Sensor Prototype, from 2026-10-23:** every group builds on an Arduino Nano with one sensor and one response. What is due and how it is graded: [the Canvas assignment](https://brophyprep.instructure.com/courses/4936/assignments/137855). How to wire any sensor, with one sketch and six checks: [Wire Any Sensor](https://flyinthelyceum.github.io/sensor-pick/wire.html).
+
 Computer Coding Studio, fall 2026. The camera, the model, one worked signal and a fake sensor, so your pair starts from a piece that already runs.
 
 **Live:** https://flyinthelyceum.github.io/sensor-layer-starter/ (click Start the camera; press D, B, V)

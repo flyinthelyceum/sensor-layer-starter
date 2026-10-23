@@ -1,15 +1,15 @@
 # The bench track
 
-An Arduino Nano and two sensors in place of the camera. The bench swaps the sensor and nothing else: `piece.js` and `fake-sense.js` stay exactly as they are, and your State Table works the same way. Bench pairs open `bench.html` instead of `index.html`, and write their rows in `bench/table-bench.js` instead of `table.js`. The steps are in the main README, under **Bench pairs**.
+An Arduino Nano and one sensor in place of the camera. **To wire any sensor, start at [Wire Any Sensor](https://flyinthelyceum.github.io/sensor-pick/wire.html)**: a pin table, one sketch for almost any sensor, and six checks. What is due is on [the Canvas assignment](https://brophyprep.instructure.com/courses/4936/assignments/137855). The bench swaps the sensor and nothing else: `piece.js` and `fake-sense.js` stay exactly as they are, and your State Table works the same way. Bench pairs open `bench.html` instead of `index.html`, and write their rows in `bench/table-bench.js` instead of `table.js`. The steps are in the main README, under **Bench pairs**.
 
-**Simple sensor first.** Every pair builds with sensors from the shelf below, the simple tier, and gets them working in the browser before anything else. An advanced sensor is a second sensor, added after the simple one works, never instead of it.
+**Numbers first.** Whatever sensor your group picked, from the shelf below or not, get its number moving in the Serial Monitor before anything else. The browser (`bench.html`) is one way to show the response; an LED, a buzzer, a servo or the screen are others.
 
 ## Building it
 
 The kits come apart, so building the circuit is part of your work.
 
 1. A Nano, a breadboard and jumpers from the north racks in the Innovation Commons. If the Nano's header pins aren't soldered yet, that comes first. Ask Mr. Reasy before you heat an iron.
-2. Two sensors on the one Nano, one per partner. Wire each one and check it in the Arduino IDE's Serial Monitor at 115200 before the browser sees it.
+2. One sensor on the Nano. Wire it from [Wire Any Sensor](https://flyinthelyceum.github.io/sensor-pick/wire.html) and check it in the Arduino IDE's Serial Monitor at 115200 before the browser sees it.
 3. Add your sensor's number to the line `bench.ino` prints (`Serial.print(" light "); Serial.print(analogRead(A0));`), then its function in `SIGNALS` in `sense-serial.js`, then its name in `bench/table-bench.js`.
 
 ## The reference build
